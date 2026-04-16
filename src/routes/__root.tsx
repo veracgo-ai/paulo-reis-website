@@ -29,14 +29,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Paulo Reis" },
+      { name: "description", content: "O imobiliário nunca foi, para mim, sobre casas. É sobre pessoas. Sobre decisões. Sobre momentos que têm impacto real na vida de quem os vive." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Paulo Reis" },
+      { property: "og:description", content: "O imobiliário nunca foi, para mim, sobre casas. É sobre pessoas. Sobre decisões. Sobre momentos que têm impacto real na vida de quem os vive." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Paulo Reis" },
+      { name: "twitter:description", content: "O imobiliário nunca foi, para mim, sobre casas. É sobre pessoas. Sobre decisões. Sobre momentos que têm impacto real na vida de quem os vive." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/LHbGtbXKUseeJ59HvwO8scHcEpR2/social-images/social-1776334493735-LOGO.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/LHbGtbXKUseeJ59HvwO8scHcEpR2/social-images/social-1776334493735-LOGO.webp" },
     ],
     links: [
       {
