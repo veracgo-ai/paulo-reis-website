@@ -29,16 +29,17 @@ export const Route = createFileRoute("/admin")({
 });
 
 const NAV = [
-  { to: "/admin", label: "Início (Dashboard)", icon: LayoutDashboard, exact: true },
-  { to: "/admin/configuracoes", label: "Configurações Gerais", icon: Settings },
-  { to: "/admin/redes-sociais", label: "Redes Sociais", icon: Share2 },
-  { to: "/admin/contactos", label: "Contactos (submissões)", icon: Mail },
+  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/admin/inicio", label: "Início (página)", icon: LayoutDashboard },
+  { to: "/admin/sobre", label: "Sobre Mim", icon: User },
+  { to: "/admin/estrelas", label: "Constelação Orion", icon: Star },
+  { to: "/admin/blog", label: "Blog (posts)", icon: FileText },
+  { to: "/admin/blog-categorias", label: "Blog (categorias)", icon: FileText },
   { to: "/admin/faqs", label: "FAQs", icon: HelpCircle },
+  { to: "/admin/contactos", label: "Contactos", icon: Mail },
   { to: "/admin/ligacoes-externas", label: "Ligações Externas", icon: Link2 },
-  // Fase B (placeholders)
-  { to: "/admin/blog", label: "Blog (em breve)", icon: FileText, disabled: true },
-  { to: "/admin/sobre", label: "Sobre Mim (em breve)", icon: User, disabled: true },
-  { to: "/admin/estrelas", label: "Constelação Orion (em breve)", icon: Star, disabled: true },
+  { to: "/admin/redes-sociais", label: "Redes Sociais", icon: Share2 },
+  { to: "/admin/configuracoes", label: "Configurações Gerais", icon: Settings },
 ];
 
 function AdminLayout() {
