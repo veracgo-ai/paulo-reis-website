@@ -143,7 +143,10 @@ function BlogPostPage() {
           </p>
         </header>
 
-        <div className="mt-8">{post.content && renderMarkdown(post.content)}</div>
+        <div
+          className="prose prose-invert mt-8 max-w-none prose-headings:font-display prose-headings:text-[var(--gold)] prose-a:text-[var(--gold)] prose-strong:text-[var(--gold)] prose-img:rounded-lg"
+          dangerouslySetInnerHTML={{ __html: post.content || "" }}
+        />
 
         <div className="mt-16 rounded-lg border border-[var(--gold)]/30 bg-white/5 p-8 text-center">
           <h3 className="font-display text-2xl text-[var(--gold)]">
