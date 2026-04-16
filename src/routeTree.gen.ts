@@ -16,10 +16,11 @@ import { Route as LigacoesExternasRouteImport } from './routes/ligacoes-externas
 import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as ConstelacaoOrionRouteImport } from './routes/constelacao-orion'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConstelacaoOrionIndexRouteImport } from './routes/constelacao-orion.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ConstelacaoOrionSlugRouteImport } from './routes/constelacao-orion.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const TermosUsoRoute = TermosUsoRouteImport.update({
   id: '/termos-uso',
@@ -56,11 +57,6 @@ const ConstelacaoOrionRoute = ConstelacaoOrionRouteImport.update({
   path: '/constelacao-orion',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -71,15 +67,24 @@ const ConstelacaoOrionIndexRoute = ConstelacaoOrionIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ConstelacaoOrionRoute,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConstelacaoOrionSlugRoute = ConstelacaoOrionSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => ConstelacaoOrionRoute,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
   '/constelacao-orion': typeof ConstelacaoOrionRouteWithChildren
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
@@ -87,25 +92,27 @@ export interface FileRoutesByFullPath {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/constelacao-orion/': typeof ConstelacaoOrionIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
   '/ligacoes-externas': typeof LigacoesExternasRoute
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/constelacao-orion': typeof ConstelacaoOrionIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
   '/constelacao-orion': typeof ConstelacaoOrionRouteWithChildren
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
@@ -113,14 +120,15 @@ export interface FileRoutesById {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/constelacao-orion/': typeof ConstelacaoOrionIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/blog'
     | '/constelacao-orion'
     | '/contactos'
     | '/faqs'
@@ -128,24 +136,26 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/blog/$slug'
     | '/constelacao-orion/$slug'
+    | '/blog/'
     | '/constelacao-orion/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/blog'
     | '/contactos'
     | '/faqs'
     | '/ligacoes-externas'
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/blog/$slug'
     | '/constelacao-orion/$slug'
+    | '/blog'
     | '/constelacao-orion'
   id:
     | '__root__'
     | '/'
-    | '/blog'
     | '/constelacao-orion'
     | '/contactos'
     | '/faqs'
@@ -153,13 +163,14 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/blog/$slug'
     | '/constelacao-orion/$slug'
+    | '/blog/'
     | '/constelacao-orion/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BlogRoute: typeof BlogRoute
   ConstelacaoOrionRoute: typeof ConstelacaoOrionRouteWithChildren
   ContactosRoute: typeof ContactosRoute
   FaqsRoute: typeof FaqsRoute
@@ -167,6 +178,8 @@ export interface RootRouteChildren {
   PoliticaPrivacidadeRoute: typeof PoliticaPrivacidadeRoute
   SobreRoute: typeof SobreRoute
   TermosUsoRoute: typeof TermosUsoRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -220,13 +233,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConstelacaoOrionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -241,12 +247,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConstelacaoOrionIndexRouteImport
       parentRoute: typeof ConstelacaoOrionRoute
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/constelacao-orion/$slug': {
       id: '/constelacao-orion/$slug'
       path: '/$slug'
       fullPath: '/constelacao-orion/$slug'
       preLoaderRoute: typeof ConstelacaoOrionSlugRouteImport
       parentRoute: typeof ConstelacaoOrionRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -266,7 +286,6 @@ const ConstelacaoOrionRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BlogRoute: BlogRoute,
   ConstelacaoOrionRoute: ConstelacaoOrionRouteWithChildren,
   ContactosRoute: ContactosRoute,
   FaqsRoute: FaqsRoute,
@@ -274,7 +293,18 @@ const rootRouteChildren: RootRouteChildren = {
   PoliticaPrivacidadeRoute: PoliticaPrivacidadeRoute,
   SobreRoute: SobreRoute,
   TermosUsoRoute: TermosUsoRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
