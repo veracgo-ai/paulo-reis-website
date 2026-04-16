@@ -96,17 +96,6 @@ function AdminLayout() {
             const active = item.exact
               ? location.pathname === item.to
               : location.pathname.startsWith(item.to);
-            if (item.disabled) {
-              return (
-                <div
-                  key={item.to}
-                  className="flex cursor-not-allowed items-center gap-3 rounded-md px-3 py-2 text-sm text-white/30"
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </div>
-              );
-            }
             return (
               <Link
                 key={item.to}
