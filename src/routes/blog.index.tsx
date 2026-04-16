@@ -1,14 +1,12 @@
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import { useBlogCategories, useBlogPosts } from "@/hooks/use-blog";
-import { z } from "zod";
-import { zodValidator, fallback } from "@tanstack/zod-adapter";
 
-const searchSchema = z.object({
-  cat: fallback(z.string().optional(), undefined),
-});
+type BlogSearch = { cat?: string };
 
 export const Route = createFileRoute("/blog/")({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: (search: Record<string, unknown>): BlogSearch => ({
+    cat: typeof search.cat === "string" ? search.cat : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Blog — Paulo Reis" },
