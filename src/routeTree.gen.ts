@@ -23,12 +23,19 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ConstelacaoOrionSlugRouteImport } from './routes/constelacao-orion.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminSobreRouteImport } from './routes/admin.sobre'
 import { Route as AdminRedesSociaisRouteImport } from './routes/admin.redes-sociais'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminLigacoesExternasRouteImport } from './routes/admin.ligacoes-externas'
+import { Route as AdminInicioRouteImport } from './routes/admin.inicio'
 import { Route as AdminFaqsRouteImport } from './routes/admin.faqs'
+import { Route as AdminEstrelasRouteImport } from './routes/admin.estrelas'
 import { Route as AdminContactosRouteImport } from './routes/admin.contactos'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
+import { Route as AdminBlogCategoriasRouteImport } from './routes/admin.blog-categorias'
+import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminEstrelasStarIdRouteImport } from './routes/admin.estrelas.$starId'
+import { Route as AdminBlogPostIdRouteImport } from './routes/admin.blog.$postId'
 
 const TermosUsoRoute = TermosUsoRouteImport.update({
   id: '/termos-uso',
@@ -100,6 +107,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSobreRoute = AdminSobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminRedesSociaisRoute = AdminRedesSociaisRouteImport.update({
   id: '/redes-sociais',
   path: '/redes-sociais',
@@ -115,9 +127,19 @@ const AdminLigacoesExternasRoute = AdminLigacoesExternasRouteImport.update({
   path: '/ligacoes-externas',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminInicioRoute = AdminInicioRouteImport.update({
+  id: '/inicio',
+  path: '/inicio',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminFaqsRoute = AdminFaqsRouteImport.update({
   id: '/faqs',
   path: '/faqs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEstrelasRoute = AdminEstrelasRouteImport.update({
+  id: '/estrelas',
+  path: '/estrelas',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminContactosRoute = AdminContactosRouteImport.update({
@@ -130,6 +152,26 @@ const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminBlogCategoriasRoute = AdminBlogCategoriasRouteImport.update({
+  id: '/blog-categorias',
+  path: '/blog-categorias',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEstrelasStarIdRoute = AdminEstrelasStarIdRouteImport.update({
+  id: '/$starId',
+  path: '/$starId',
+  getParentRoute: () => AdminEstrelasRoute,
+} as any)
+const AdminBlogPostIdRoute = AdminBlogPostIdRouteImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => AdminBlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -141,17 +183,24 @@ export interface FileRoutesByFullPath {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/admin/blog-categorias': typeof AdminBlogCategoriasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/contactos': typeof AdminContactosRoute
+  '/admin/estrelas': typeof AdminEstrelasRouteWithChildren
   '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/inicio': typeof AdminInicioRoute
   '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redes-sociais': typeof AdminRedesSociaisRoute
+  '/admin/sobre': typeof AdminSobreRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/constelacao-orion/': typeof ConstelacaoOrionIndexRoute
+  '/admin/blog/$postId': typeof AdminBlogPostIdRoute
+  '/admin/estrelas/$starId': typeof AdminEstrelasStarIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -161,17 +210,24 @@ export interface FileRoutesByTo {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/admin/blog-categorias': typeof AdminBlogCategoriasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/contactos': typeof AdminContactosRoute
+  '/admin/estrelas': typeof AdminEstrelasRouteWithChildren
   '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/inicio': typeof AdminInicioRoute
   '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redes-sociais': typeof AdminRedesSociaisRoute
+  '/admin/sobre': typeof AdminSobreRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/constelacao-orion': typeof ConstelacaoOrionIndexRoute
+  '/admin/blog/$postId': typeof AdminBlogPostIdRoute
+  '/admin/estrelas/$starId': typeof AdminEstrelasStarIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -184,17 +240,24 @@ export interface FileRoutesById {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/admin/blog': typeof AdminBlogRouteWithChildren
+  '/admin/blog-categorias': typeof AdminBlogCategoriasRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/contactos': typeof AdminContactosRoute
+  '/admin/estrelas': typeof AdminEstrelasRouteWithChildren
   '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/inicio': typeof AdminInicioRoute
   '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redes-sociais': typeof AdminRedesSociaisRoute
+  '/admin/sobre': typeof AdminSobreRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/constelacao-orion/': typeof ConstelacaoOrionIndexRoute
+  '/admin/blog/$postId': typeof AdminBlogPostIdRoute
+  '/admin/estrelas/$starId': typeof AdminEstrelasStarIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -208,17 +271,24 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/admin/blog'
+    | '/admin/blog-categorias'
     | '/admin/configuracoes'
     | '/admin/contactos'
+    | '/admin/estrelas'
     | '/admin/faqs'
+    | '/admin/inicio'
     | '/admin/ligacoes-externas'
     | '/admin/login'
     | '/admin/redes-sociais'
+    | '/admin/sobre'
     | '/blog/$slug'
     | '/constelacao-orion/$slug'
     | '/admin/'
     | '/blog/'
     | '/constelacao-orion/'
+    | '/admin/blog/$postId'
+    | '/admin/estrelas/$starId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -228,17 +298,24 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/admin/blog'
+    | '/admin/blog-categorias'
     | '/admin/configuracoes'
     | '/admin/contactos'
+    | '/admin/estrelas'
     | '/admin/faqs'
+    | '/admin/inicio'
     | '/admin/ligacoes-externas'
     | '/admin/login'
     | '/admin/redes-sociais'
+    | '/admin/sobre'
     | '/blog/$slug'
     | '/constelacao-orion/$slug'
     | '/admin'
     | '/blog'
     | '/constelacao-orion'
+    | '/admin/blog/$postId'
+    | '/admin/estrelas/$starId'
   id:
     | '__root__'
     | '/'
@@ -250,17 +327,24 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/admin/blog'
+    | '/admin/blog-categorias'
     | '/admin/configuracoes'
     | '/admin/contactos'
+    | '/admin/estrelas'
     | '/admin/faqs'
+    | '/admin/inicio'
     | '/admin/ligacoes-externas'
     | '/admin/login'
     | '/admin/redes-sociais'
+    | '/admin/sobre'
     | '/blog/$slug'
     | '/constelacao-orion/$slug'
     | '/admin/'
     | '/blog/'
     | '/constelacao-orion/'
+    | '/admin/blog/$postId'
+    | '/admin/estrelas/$starId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -377,6 +461,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/sobre': {
+      id: '/admin/sobre'
+      path: '/sobre'
+      fullPath: '/admin/sobre'
+      preLoaderRoute: typeof AdminSobreRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/redes-sociais': {
       id: '/admin/redes-sociais'
       path: '/redes-sociais'
@@ -398,11 +489,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLigacoesExternasRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/inicio': {
+      id: '/admin/inicio'
+      path: '/inicio'
+      fullPath: '/admin/inicio'
+      preLoaderRoute: typeof AdminInicioRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/faqs': {
       id: '/admin/faqs'
       path: '/faqs'
       fullPath: '/admin/faqs'
       preLoaderRoute: typeof AdminFaqsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/estrelas': {
+      id: '/admin/estrelas'
+      path: '/estrelas'
+      fullPath: '/admin/estrelas'
+      preLoaderRoute: typeof AdminEstrelasRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/contactos': {
@@ -419,26 +524,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConfiguracoesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/blog-categorias': {
+      id: '/admin/blog-categorias'
+      path: '/blog-categorias'
+      fullPath: '/admin/blog-categorias'
+      preLoaderRoute: typeof AdminBlogCategoriasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/estrelas/$starId': {
+      id: '/admin/estrelas/$starId'
+      path: '/$starId'
+      fullPath: '/admin/estrelas/$starId'
+      preLoaderRoute: typeof AdminEstrelasStarIdRouteImport
+      parentRoute: typeof AdminEstrelasRoute
+    }
+    '/admin/blog/$postId': {
+      id: '/admin/blog/$postId'
+      path: '/$postId'
+      fullPath: '/admin/blog/$postId'
+      preLoaderRoute: typeof AdminBlogPostIdRouteImport
+      parentRoute: typeof AdminBlogRoute
+    }
   }
 }
 
+interface AdminBlogRouteChildren {
+  AdminBlogPostIdRoute: typeof AdminBlogPostIdRoute
+}
+
+const AdminBlogRouteChildren: AdminBlogRouteChildren = {
+  AdminBlogPostIdRoute: AdminBlogPostIdRoute,
+}
+
+const AdminBlogRouteWithChildren = AdminBlogRoute._addFileChildren(
+  AdminBlogRouteChildren,
+)
+
+interface AdminEstrelasRouteChildren {
+  AdminEstrelasStarIdRoute: typeof AdminEstrelasStarIdRoute
+}
+
+const AdminEstrelasRouteChildren: AdminEstrelasRouteChildren = {
+  AdminEstrelasStarIdRoute: AdminEstrelasStarIdRoute,
+}
+
+const AdminEstrelasRouteWithChildren = AdminEstrelasRoute._addFileChildren(
+  AdminEstrelasRouteChildren,
+)
+
 interface AdminRouteChildren {
+  AdminBlogRoute: typeof AdminBlogRouteWithChildren
+  AdminBlogCategoriasRoute: typeof AdminBlogCategoriasRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminContactosRoute: typeof AdminContactosRoute
+  AdminEstrelasRoute: typeof AdminEstrelasRouteWithChildren
   AdminFaqsRoute: typeof AdminFaqsRoute
+  AdminInicioRoute: typeof AdminInicioRoute
   AdminLigacoesExternasRoute: typeof AdminLigacoesExternasRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminRedesSociaisRoute: typeof AdminRedesSociaisRoute
+  AdminSobreRoute: typeof AdminSobreRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminBlogRoute: AdminBlogRouteWithChildren,
+  AdminBlogCategoriasRoute: AdminBlogCategoriasRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminContactosRoute: AdminContactosRoute,
+  AdminEstrelasRoute: AdminEstrelasRouteWithChildren,
   AdminFaqsRoute: AdminFaqsRoute,
+  AdminInicioRoute: AdminInicioRoute,
   AdminLigacoesExternasRoute: AdminLigacoesExternasRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminRedesSociaisRoute: AdminRedesSociaisRoute,
+  AdminSobreRoute: AdminSobreRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
