@@ -21,6 +21,8 @@ export function useAuth(): AuthState {
       setSession(sess);
       setUser(sess?.user ?? null);
       if (sess?.user) {
+        // CRITICAL: reset loading so consumers wait for role check
+        setLoading(true);
         // defer role fetch to avoid deadlocks
         setTimeout(() => {
           checkRole(sess.user.id);
