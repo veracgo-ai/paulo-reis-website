@@ -28,6 +28,7 @@ type Props = {
 
 export function RichEditor({ value, onChange, placeholder = "Escreva o conteúdo..." }: Props) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: false, HTMLAttributes: { class: "text-[#C5A065] underline" } }),

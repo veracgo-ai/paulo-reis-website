@@ -39,19 +39,47 @@ function BlogPostEdit() {
   const [post, setPost] = useState<Post | null>(null);
   const [cats, setCats] = useState<{ id: string; name: string }[]>([]);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
-      const [{ data: p }, { data: c }] = await Promise.all([
+      setLoading(true);
+      setLoadError(null);
+      const [pRes, cRes] = await Promise.all([
         supabase.from("blog_posts").select("*").eq("id", postId).maybeSingle(),
         supabase.from("blog_categories").select("id,name").order("display_order"),
       ]);
-      setPost(p as Post | null);
-      setCats((c ?? []) as { id: string; name: string }[]);
+      if (pRes.error) {
+        setLoadError(pRes.error.message);
+      } else if (!pRes.data) {
+        setLoadError("Post não encontrado.");
+      } else {
+        setPost(pRes.data as Post);
+      }
+      setCats((cRes.data ?? []) as { id: string; name: string }[]);
+      setLoading(false);
     })();
   }, [postId]);
 
-  if (!post) return <Loader2 className="h-6 w-6 animate-spin text-[#C5A065]" />;
+  if (loading)
+    return (
+      <div className="flex items-center gap-2 text-slate-500">
+        <Loader2 className="h-5 w-5 animate-spin text-[#C5A065]" /> A carregar post…
+      </div>
+    );
+
+  if (loadError || !post)
+    return (
+      <div>
+        <Link to="/admin/blog" className="mb-4 inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#C5A065]">
+          <ArrowLeft className="h-4 w-4" /> Voltar à lista
+        </Link>
+        <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {loadError || "Post não encontrado."}
+        </div>
+      </div>
+    );
 
   const set = (patch: Partial<Post>) => setPost({ ...post, ...patch });
 
