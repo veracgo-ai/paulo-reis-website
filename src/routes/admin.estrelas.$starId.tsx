@@ -42,9 +42,13 @@ function StarEdit() {
   const [star, setStar] = useState<Star | null>(null);
   const [sections, setSections] = useState<Section[]>([]);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const load = async () => {
-    const [{ data: s }, { data: secs }] = await Promise.all([
+    setLoading(true);
+    setLoadError(null);
+    const [sRes, secsRes] = await Promise.all([
       supabase.from("stars").select("*").eq("id", starId).maybeSingle(),
       supabase
         .from("star_sections")
@@ -52,8 +56,11 @@ function StarEdit() {
         .eq("star_id", starId)
         .order("display_order"),
     ]);
-    setStar(s as Star | null);
-    setSections((secs ?? []) as Section[]);
+    if (sRes.error) setLoadError(sRes.error.message);
+    else if (!sRes.data) setLoadError("Estrela não encontrada.");
+    else setStar(sRes.data as Star);
+    setSections((secsRes.data ?? []) as Section[]);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -61,7 +68,23 @@ function StarEdit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starId]);
 
-  if (!star) return <Loader2 className="h-6 w-6 animate-spin text-[#C5A065]" />;
+  if (loading)
+    return (
+      <div className="flex items-center gap-2 text-slate-500">
+        <Loader2 className="h-5 w-5 animate-spin text-[#C5A065]" /> A carregar…
+      </div>
+    );
+  if (loadError || !star)
+    return (
+      <div>
+        <Link to="/admin/estrelas" className="mb-4 inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#C5A065]">
+          <ArrowLeft className="h-4 w-4" /> Voltar
+        </Link>
+        <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {loadError || "Estrela não encontrada."}
+        </div>
+      </div>
+    );
 
   const set = (patch: Partial<Star>) => setStar({ ...star, ...patch });
 
