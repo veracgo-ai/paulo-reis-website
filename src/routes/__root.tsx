@@ -1,9 +1,10 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts, useLocation } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { Toaster } from "@/components/ui/sonner";
 import { FONTS_CSS_URL } from "@/lib/fonts";
 
 function NotFoundComponent() {
@@ -87,6 +88,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/admin");
+
+  if (isAdmin) {
+    return (
+      <>
+        <Outlet />
+        <Toaster richColors position="top-right" />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -95,6 +108,7 @@ function RootComponent() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <Toaster richColors position="top-right" />
     </>
   );
 }
