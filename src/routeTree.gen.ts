@@ -16,11 +16,19 @@ import { Route as LigacoesExternasRouteImport } from './routes/ligacoes-externas
 import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as ConstelacaoOrionRouteImport } from './routes/constelacao-orion'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConstelacaoOrionIndexRouteImport } from './routes/constelacao-orion.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ConstelacaoOrionSlugRouteImport } from './routes/constelacao-orion.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminRedesSociaisRouteImport } from './routes/admin.redes-sociais'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminLigacoesExternasRouteImport } from './routes/admin.ligacoes-externas'
+import { Route as AdminFaqsRouteImport } from './routes/admin.faqs'
+import { Route as AdminContactosRouteImport } from './routes/admin.contactos'
+import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 
 const TermosUsoRoute = TermosUsoRouteImport.update({
   id: '/termos-uso',
@@ -57,6 +65,11 @@ const ConstelacaoOrionRoute = ConstelacaoOrionRouteImport.update({
   path: '/constelacao-orion',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -72,6 +85,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ConstelacaoOrionSlugRoute = ConstelacaoOrionSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -82,9 +100,40 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRedesSociaisRoute = AdminRedesSociaisRouteImport.update({
+  id: '/redes-sociais',
+  path: '/redes-sociais',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLigacoesExternasRoute = AdminLigacoesExternasRouteImport.update({
+  id: '/ligacoes-externas',
+  path: '/ligacoes-externas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFaqsRoute = AdminFaqsRouteImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContactosRoute = AdminContactosRouteImport.update({
+  id: '/contactos',
+  path: '/contactos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/constelacao-orion': typeof ConstelacaoOrionRouteWithChildren
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
@@ -92,8 +141,15 @@ export interface FileRoutesByFullPath {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/contactos': typeof AdminContactosRoute
+  '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/redes-sociais': typeof AdminRedesSociaisRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/constelacao-orion/': typeof ConstelacaoOrionIndexRoute
 }
@@ -105,14 +161,22 @@ export interface FileRoutesByTo {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/contactos': typeof AdminContactosRoute
+  '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/redes-sociais': typeof AdminRedesSociaisRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/constelacao-orion': typeof ConstelacaoOrionIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/constelacao-orion': typeof ConstelacaoOrionRouteWithChildren
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
@@ -120,8 +184,15 @@ export interface FileRoutesById {
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/termos-uso': typeof TermosUsoRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/contactos': typeof AdminContactosRoute
+  '/admin/faqs': typeof AdminFaqsRoute
+  '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/redes-sociais': typeof AdminRedesSociaisRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/constelacao-orion/$slug': typeof ConstelacaoOrionSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/constelacao-orion/': typeof ConstelacaoOrionIndexRoute
 }
@@ -129,6 +200,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/constelacao-orion'
     | '/contactos'
     | '/faqs'
@@ -136,8 +208,15 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/admin/configuracoes'
+    | '/admin/contactos'
+    | '/admin/faqs'
+    | '/admin/ligacoes-externas'
+    | '/admin/login'
+    | '/admin/redes-sociais'
     | '/blog/$slug'
     | '/constelacao-orion/$slug'
+    | '/admin/'
     | '/blog/'
     | '/constelacao-orion/'
   fileRoutesByTo: FileRoutesByTo
@@ -149,13 +228,21 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/admin/configuracoes'
+    | '/admin/contactos'
+    | '/admin/faqs'
+    | '/admin/ligacoes-externas'
+    | '/admin/login'
+    | '/admin/redes-sociais'
     | '/blog/$slug'
     | '/constelacao-orion/$slug'
+    | '/admin'
     | '/blog'
     | '/constelacao-orion'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/constelacao-orion'
     | '/contactos'
     | '/faqs'
@@ -163,14 +250,22 @@ export interface FileRouteTypes {
     | '/politica-privacidade'
     | '/sobre'
     | '/termos-uso'
+    | '/admin/configuracoes'
+    | '/admin/contactos'
+    | '/admin/faqs'
+    | '/admin/ligacoes-externas'
+    | '/admin/login'
+    | '/admin/redes-sociais'
     | '/blog/$slug'
     | '/constelacao-orion/$slug'
+    | '/admin/'
     | '/blog/'
     | '/constelacao-orion/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ConstelacaoOrionRoute: typeof ConstelacaoOrionRouteWithChildren
   ContactosRoute: typeof ContactosRoute
   FaqsRoute: typeof FaqsRoute
@@ -233,6 +328,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConstelacaoOrionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -254,6 +356,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/constelacao-orion/$slug': {
       id: '/constelacao-orion/$slug'
       path: '/$slug'
@@ -268,8 +377,72 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/redes-sociais': {
+      id: '/admin/redes-sociais'
+      path: '/redes-sociais'
+      fullPath: '/admin/redes-sociais'
+      preLoaderRoute: typeof AdminRedesSociaisRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/ligacoes-externas': {
+      id: '/admin/ligacoes-externas'
+      path: '/ligacoes-externas'
+      fullPath: '/admin/ligacoes-externas'
+      preLoaderRoute: typeof AdminLigacoesExternasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/faqs': {
+      id: '/admin/faqs'
+      path: '/faqs'
+      fullPath: '/admin/faqs'
+      preLoaderRoute: typeof AdminFaqsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contactos': {
+      id: '/admin/contactos'
+      path: '/contactos'
+      fullPath: '/admin/contactos'
+      preLoaderRoute: typeof AdminContactosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/configuracoes': {
+      id: '/admin/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/admin/configuracoes'
+      preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
+  AdminContactosRoute: typeof AdminContactosRoute
+  AdminFaqsRoute: typeof AdminFaqsRoute
+  AdminLigacoesExternasRoute: typeof AdminLigacoesExternasRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminRedesSociaisRoute: typeof AdminRedesSociaisRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminConfiguracoesRoute: AdminConfiguracoesRoute,
+  AdminContactosRoute: AdminContactosRoute,
+  AdminFaqsRoute: AdminFaqsRoute,
+  AdminLigacoesExternasRoute: AdminLigacoesExternasRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminRedesSociaisRoute: AdminRedesSociaisRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface ConstelacaoOrionRouteChildren {
   ConstelacaoOrionSlugRoute: typeof ConstelacaoOrionSlugRoute
@@ -286,6 +459,7 @@ const ConstelacaoOrionRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   ConstelacaoOrionRoute: ConstelacaoOrionRouteWithChildren,
   ContactosRoute: ContactosRoute,
   FaqsRoute: FaqsRoute,
