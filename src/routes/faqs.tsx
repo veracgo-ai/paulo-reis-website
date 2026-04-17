@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import { useFaqs } from "@/hooks/use-faqs";
 import { cn } from "@/lib/utils";
+import { PageHero } from "@/components/PageHero";
+import { usePageSections, sectionBySlug } from "@/hooks/use-site-data";
 
 export const Route = createFileRoute("/faqs")({
   head: () => ({
@@ -26,6 +28,8 @@ export const Route = createFileRoute("/faqs")({
 
 function FaqsPage() {
   const { categories, faqs, loading } = useFaqs();
+  const { sections } = usePageSections("faqs");
+  const hero = sectionBySlug(sections, "hero");
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -63,21 +67,18 @@ function FaqsPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[var(--navy-deep)] pb-24 pt-32 text-white">
+    <div className="relative min-h-screen bg-[var(--navy-deep)] pb-24 text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <header className="text-center">
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
-            Tire as suas dúvidas
-          </span>
-          <h1 className="mt-3 font-display text-4xl sm:text-5xl">Perguntas Frequentes</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-white/70">
-            Respostas claras sobre aquisição, venda, investimento e carreira no imobiliário.
-          </p>
-        </header>
+      <PageHero
+        eyebrow={hero?.subtitle ?? "Tire as suas dúvidas"}
+        title={hero?.title ?? "Perguntas Frequentes"}
+        description={hero?.content ?? "Respostas claras sobre aquisição, venda, investimento e carreira no imobiliário."}
+        imageUrl={hero?.image_url}
+      />
+      <div className="mx-auto max-w-4xl px-4 pt-12 sm:px-6 lg:px-8">
 
         {/* Pesquisa */}
         <div className="mx-auto mt-10 max-w-xl">

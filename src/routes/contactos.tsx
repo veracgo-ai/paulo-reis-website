@@ -10,6 +10,7 @@ import { useReveal } from "@/hooks/use-reveal";
 import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { PageHero } from "@/components/PageHero";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/contactos")({
@@ -78,21 +79,14 @@ function ContactosPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[var(--navy-deep)] px-4 pb-20 pt-40 text-white sm:pt-48">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,oklch(0.738_0.094_75.2/0.18),transparent_60%)]" />
-        <div ref={heroRef} className="reveal relative mx-auto max-w-4xl text-center">
-          <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
-            {hero?.subtitle ?? "Contactos"}
-          </span>
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl">
-            {hero?.title ?? "Vamos conversar."}
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
-            {hero?.content ??
-              "Cada decisão estruturada começa por uma conversa honesta."}
-          </p>
-        </div>
-      </section>
+      <div ref={heroRef} className="reveal">
+        <PageHero
+          eyebrow={hero?.subtitle ?? "Contactos"}
+          title={hero?.title ?? "Vamos conversar."}
+          description={hero?.content ?? "Cada decisão estruturada começa por uma conversa honesta."}
+          imageUrl={hero?.image_url}
+        />
+      </div>
 
       {/* Form + Info */}
       <section className="bg-[var(--light-bg)] px-4 py-20 sm:py-28">

@@ -1,5 +1,7 @@
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import { useBlogCategories, useBlogPosts } from "@/hooks/use-blog";
+import { PageHero } from "@/components/PageHero";
+import { usePageSections, sectionBySlug } from "@/hooks/use-site-data";
 
 type BlogSearch = { cat?: string };
 
@@ -38,23 +40,21 @@ function BlogIndex() {
   const { cat } = useSearch({ from: "/blog/" });
   const { categories } = useBlogCategories();
   const { posts, loading } = useBlogPosts(cat);
+  const { sections } = usePageSections("blog");
+  const hero = sectionBySlug(sections, "hero");
 
   const featured = !cat ? posts.find((p) => p.is_featured) : undefined;
   const rest = featured ? posts.filter((p) => p.id !== featured.id) : posts;
 
   return (
-    <div className="relative min-h-screen bg-[var(--navy-deep)] pb-24 pt-32 text-white">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <header className="mb-12 text-center">
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
-            Insights & Estratégia
-          </span>
-          <h1 className="mt-3 font-display text-4xl sm:text-5xl">Blog</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-white/70">
-            Análises, ferramentas e perspetivas sobre o mercado imobiliário, investimento e
-            construção de carreira.
-          </p>
-        </header>
+    <div className="relative min-h-screen bg-[var(--navy-deep)] pb-24 text-white">
+      <PageHero
+        eyebrow={hero?.subtitle ?? "Insights & Estratégia"}
+        title={hero?.title ?? "Blog"}
+        description={hero?.content ?? "Análises, ferramentas e perspetivas sobre o mercado imobiliário, investimento e construção de carreira."}
+        imageUrl={hero?.image_url}
+      />
+      <div className="mx-auto max-w-6xl px-4 pt-12 sm:px-6 lg:px-8">
 
         {/* Categorias */}
         <nav
