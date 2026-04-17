@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { usePageSections, sectionBySlug } from "@/hooks/use-site-data";
 import { useReveal } from "@/hooks/use-reveal";
-import fotoModelo from "@/assets/foto-modelo.jpg";
+import fotoModelo from "@/assets/foto-modelo.webp";
 import { Compass, Target, Eye, Heart } from "lucide-react";
 
 export const Route = createFileRoute("/sobre")({

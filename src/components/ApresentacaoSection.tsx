@@ -1,5 +1,5 @@
 import { useReveal } from "@/hooks/use-reveal";
-import fotoModelo from "@/assets/foto-modelo.jpg";
+import fotoModelo from "@/assets/foto-modelo.webp";
 
 interface Props {
   title?: string | null;
