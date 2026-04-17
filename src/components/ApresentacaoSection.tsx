@@ -5,6 +5,8 @@ interface Props {
   title?: string | null;
   subtitle?: string | null;
   content?: string | null;
+  imageUrl?: string | null;
+  reverse?: boolean;
 }
 
 /** Renders Markdown-lite content (bold + bullet lists + paragraphs). */
@@ -42,7 +44,6 @@ function renderContent(content: string) {
   });
 }
 function formatInline(text: string) {
-  // **bold** -> <strong>
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((p, i) =>
     p.startsWith("**") && p.endsWith("**") ? (
@@ -55,29 +56,33 @@ function formatInline(text: string) {
   );
 }
 
-export function ApresentacaoSection({ title, subtitle, content }: Props) {
+export function ApresentacaoSection({ title, subtitle, content, imageUrl, reverse }: Props) {
   const ref = useReveal();
+  const src = imageUrl || fotoModelo;
   return (
     <section ref={ref} className="reveal relative overflow-hidden bg-white px-4 py-20 sm:py-28">
-      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1.4fr] lg:items-start">
+      <div
+        className={`mx-auto grid max-w-7xl gap-12 lg:items-start ${
+          reverse ? "lg:grid-cols-[1.4fr_1fr]" : "lg:grid-cols-[1fr_1.4fr]"
+        }`}
+      >
         {/* Image side */}
-        <div className="relative">
+        <div className={`relative ${reverse ? "lg:order-2" : ""}`}>
           <div className="absolute -inset-4 -z-10 rounded-md bg-gradient-to-br from-[var(--gold)]/20 to-transparent blur-2xl" />
           <div className="relative overflow-hidden rounded-md shadow-[0_20px_60px_-15px_rgba(10,25,47,0.35)]">
             <img
-              src={fotoModelo}
-              alt="Paulo Reis em conversa estratégica"
+              src={src}
+              alt={title ?? "Paulo Reis"}
               className="h-full w-full object-cover"
               loading="lazy"
             />
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[var(--navy)]/40 to-transparent" />
           </div>
-          {/* gold corner */}
           <div className="absolute -bottom-3 -right-3 h-24 w-24 border-b-4 border-r-4 border-[var(--gold)]" />
         </div>
 
         {/* Text side */}
-        <div className="space-y-6 text-[var(--neutral-dark)]">
+        <div className={`space-y-6 text-[var(--neutral-dark)] ${reverse ? "lg:order-1" : ""}`}>
           {subtitle && (
             <span className="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
               {subtitle}
