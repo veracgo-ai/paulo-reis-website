@@ -94,7 +94,10 @@ function BlogPostEdit() {
       </div>
     );
 
-  const set = (patch: Partial<Post>) => setPost({ ...post, ...patch });
+  const set = (patch: Partial<Post>) => {
+    setPost({ ...post, ...patch });
+    setDirty(true);
+  };
 
   const save = async (publish?: boolean) => {
     setSaving(true);
@@ -114,8 +117,9 @@ function BlogPostEdit() {
     const { error } = await supabase.from("blog_posts").update(updates).eq("id", post.id);
     setSaving(false);
     if (error) return toast.error(error.message);
-    toast.success(publish === true ? "Post publicado" : publish === false ? "Despublicado" : "Guardado");
-    if (publish !== undefined) set({ is_published: publish });
+    toast.success(publish === true ? "Post publicado" : publish === false ? "Despublicado" : "Alterações guardadas");
+    setDirty(false);
+    if (publish !== undefined) setPost({ ...post, is_published: publish });
   };
 
   const remove = async () => {
