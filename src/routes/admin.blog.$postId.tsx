@@ -41,6 +41,7 @@ function BlogPostEdit() {
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [dirty, setDirty] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -59,8 +60,20 @@ function BlogPostEdit() {
       }
       setCats((cRes.data ?? []) as { id: string; name: string }[]);
       setLoading(false);
+      setDirty(false);
     })();
   }, [postId]);
+
+  // Aviso ao sair sem guardar
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (!dirty) return;
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
 
   if (loading)
     return (
@@ -81,7 +94,10 @@ function BlogPostEdit() {
       </div>
     );
 
-  const set = (patch: Partial<Post>) => setPost({ ...post, ...patch });
+  const set = (patch: Partial<Post>) => {
+    setPost({ ...post, ...patch });
+    setDirty(true);
+  };
 
   const save = async (publish?: boolean) => {
     setSaving(true);
@@ -101,8 +117,9 @@ function BlogPostEdit() {
     const { error } = await supabase.from("blog_posts").update(updates).eq("id", post.id);
     setSaving(false);
     if (error) return toast.error(error.message);
-    toast.success(publish === true ? "Post publicado" : publish === false ? "Despublicado" : "Guardado");
-    if (publish !== undefined) set({ is_published: publish });
+    toast.success(publish === true ? "Post publicado" : publish === false ? "Despublicado" : "Alterações guardadas");
+    setDirty(false);
+    if (publish !== undefined) setPost({ ...post, is_published: publish });
   };
 
   const remove = async () => {
@@ -239,6 +256,27 @@ function BlogPostEdit() {
             onChange={(html) => set({ content: html })}
             placeholder="Escreve o artigo..."
           />
+        </div>
+      </div>
+
+      {/* Barra sticky inferior — sempre visível */}
+      <div className="sticky bottom-0 -mx-6 mt-6 border-t border-slate-200 bg-white/95 px-6 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] backdrop-blur md:-mx-8 md:px-8">
+        <div className="flex items-center justify-between gap-4">
+          <div className="text-sm text-slate-500">
+            {dirty ? (
+              <span className="font-medium text-amber-600">● Tens alterações por guardar</span>
+            ) : (
+              <span className="text-emerald-600">✓ Tudo guardado</span>
+            )}
+          </div>
+          <button
+            onClick={() => save()}
+            disabled={saving || !dirty}
+            className="inline-flex items-center gap-2 rounded-md bg-[#C5A065] px-6 py-2.5 text-sm font-semibold text-[#0A192F] shadow-sm transition-colors hover:bg-[#C5A065]/90 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+            {saving ? "A guardar..." : "Guardar alterações"}
+          </button>
         </div>
       </div>
     </div>
