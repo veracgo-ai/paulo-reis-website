@@ -87,22 +87,24 @@ export function useAuth(): AuthState {
     const existingCheck = pendingRoleChecksRef.current.get(userId);
     if (existingCheck) return existingCheck;
 
-    const roleCheck = supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", userId)
-      .eq("role", "admin")
-      .maybeSingle()
-      .then(({ data }) => {
+    const roleCheck = (async () => {
+      try {
+        const { data } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", userId)
+          .eq("role", "admin")
+          .maybeSingle();
+
         const nextIsAdmin = !!data;
         roleCacheRef.current.set(userId, nextIsAdmin);
-        pendingRoleChecksRef.current.delete(userId);
         return nextIsAdmin;
-      })
-      .catch(() => {
-        pendingRoleChecksRef.current.delete(userId);
+      } catch {
         return false;
-      });
+      } finally {
+        pendingRoleChecksRef.current.delete(userId);
+      }
+    })();
 
     pendingRoleChecksRef.current.set(userId, roleCheck);
     return roleCheck;
