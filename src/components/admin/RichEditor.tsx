@@ -1,6 +1,5 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import { useEffect } from "react";
@@ -30,8 +29,9 @@ export function RichEditor({ value, onChange, placeholder = "Escreva o conteúdo
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit,
-      Link.configure({ openOnClick: false, HTMLAttributes: { class: "text-[#C5A065] underline" } }),
+      StarterKit.configure({
+        link: { openOnClick: false, HTMLAttributes: { class: "text-[#C5A065] underline" } },
+      }),
       Image.configure({ HTMLAttributes: { class: "rounded-md my-4 max-w-full h-auto" } }),
       Placeholder.configure({ placeholder }),
     ],
