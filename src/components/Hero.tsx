@@ -115,15 +115,19 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right: photo with parallax */}
-        <div ref={photoRef} className="relative flex-1" style={{ willChange: "transform" }}>
+        {/* Right: photo with parallax — pushed down to hide bottom crop behind the fade */}
+        <div
+          ref={photoRef}
+          className="relative flex-1 self-end -mb-24 lg:-mb-32"
+          style={{ willChange: "transform" }}
+        >
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
             {/* Glow ring */}
             <div className="absolute inset-0 -z-10 mx-auto h-full w-full rounded-full bg-[var(--gold)]/15 blur-3xl" />
             <img
               src={heroPhoto}
               alt="Paulo Reis, consultor imobiliário"
-              className="relative mx-auto h-auto w-full max-h-[640px] object-contain animate-float drop-shadow-2xl"
+              className="relative mx-auto h-auto w-full max-h-[680px] object-contain animate-float drop-shadow-2xl"
               loading="eager"
               fetchPriority="high"
             />
@@ -131,8 +135,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
+      {/* Bottom fade — taller so it covers the photo's lower edge */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-gradient-to-b from-transparent via-background/70 to-background" />
     </section>
   );
 }
