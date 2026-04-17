@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Home, Building2, Users, Calendar, ExternalLink as ExtIcon } from "lucide-react";
 import { useExternalLinks } from "@/hooks/use-external-links";
+import { PageHero } from "@/components/PageHero";
+import { usePageSections, sectionBySlug } from "@/hooks/use-site-data";
 
 export const Route = createFileRoute("/ligacoes-externas")({
   head: () => ({
@@ -30,23 +32,21 @@ const ICONS: Record<string, typeof Home> = {
 
 function LinksPage() {
   const { links, loading } = useExternalLinks();
+  const { sections } = usePageSections("ligacoes-externas");
+  const hero = sectionBySlug(sections, "hero");
 
   return (
-    <div className="relative min-h-screen bg-[var(--navy-deep)] pb-24 pt-32 text-white">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <header className="text-center">
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
-            Acesso rápido
-          </span>
-          <h1 className="mt-3 font-display text-4xl sm:text-5xl">Ligações Externas</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-white/70">
-            Ferramentas e plataformas que utilizo no dia-a-dia para servir clientes e parceiros.
-          </p>
-        </header>
+    <div className="relative min-h-screen bg-[var(--navy-deep)] pb-24 text-white">
+      <PageHero
+        eyebrow={hero?.subtitle ?? "Acesso rápido"}
+        title={hero?.title ?? "Ligações Externas"}
+        description={hero?.content ?? "Ferramentas e plataformas que utilizo no dia-a-dia para servir clientes e parceiros."}
+        imageUrl={hero?.image_url}
+      />
+      <div className="mx-auto max-w-5xl px-4 pt-12 sm:px-6 lg:px-8">
+        {loading && <p className="text-center text-white/60">A carregar…</p>}
 
-        {loading && <p className="mt-12 text-center text-white/60">A carregar…</p>}
-
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
+        <div className="mt-4 grid gap-6 sm:grid-cols-2">
           {links.map((link) => {
             const Icon = (link.icon_name && ICONS[link.icon_name]) || ExtIcon;
             return (
