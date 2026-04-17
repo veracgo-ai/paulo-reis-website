@@ -143,6 +143,14 @@ function BlogPostPage() {
           </p>
         </header>
 
+        {post.cover_image_url && (
+          <img
+            src={post.cover_image_url}
+            alt={post.title}
+            className="mt-8 w-full rounded-lg border border-white/10 object-cover"
+          />
+        )}
+
         <div
           className="prose prose-invert mt-8 max-w-none prose-headings:font-display prose-headings:text-[var(--gold)] prose-a:text-[var(--gold)] prose-strong:text-[var(--gold)] prose-img:rounded-lg"
           dangerouslySetInnerHTML={{ __html: post.content || "" }}
