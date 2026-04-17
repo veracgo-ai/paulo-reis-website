@@ -69,8 +69,19 @@ function StarPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[var(--navy-deep)] px-4 pb-24 pt-40 text-white sm:pt-48">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.738_0.094_75.2/0.15),transparent_60%)]" />
+      <section className="relative isolate overflow-hidden bg-[var(--navy-deep)] px-4 pb-24 pt-40 text-white sm:pt-48">
+        {star.hero_image_url && (
+          <div
+            className="absolute inset-0 -z-20 opacity-40"
+            style={{
+              backgroundImage: `url(${star.hero_image_url})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        )}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[var(--navy-deep)]/85 via-[var(--navy-deep)]/75 to-[var(--navy-deep)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,oklch(0.738_0.094_75.2/0.15),transparent_60%)]" />
         <div className="relative mx-auto max-w-4xl">
           <Link
             to="/constelacao-orion"

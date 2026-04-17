@@ -1,0 +1,10 @@
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/alnitak.jpg' WHERE slug = 'alnitak';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/alnilam.jpg' WHERE slug = 'alnilam';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/mintaka.jpg' WHERE slug = 'mintaka';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/rigel.jpg' WHERE slug = 'rigel';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/bellatrix.jpg' WHERE slug = 'bellatrix';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/saiph.jpg' WHERE slug = 'saiph';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/betelgeuse.jpg' WHERE slug = 'betelgeuse';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/hatysa.jpg' WHERE slug = 'hatysa';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/meissa.jpg' WHERE slug = 'meissa';
+UPDATE public.stars SET hero_image_url = 'https://qlxdidtestxifqcovezs.supabase.co/storage/v1/object/public/site-images/stars/tabit.jpg' WHERE slug = 'tabit';
