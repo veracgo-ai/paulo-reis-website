@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/admin/PageHeader";
 import { toast } from "sonner";
 import { Loader2, Plus, Edit, Trash2 } from "lucide-react";
 
-export const Route = createFileRoute("/admin/blog")({
+export const Route = createFileRoute("/admin/blog/")({
   component: BlogPostsAdmin,
 });
 
