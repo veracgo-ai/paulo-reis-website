@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import heroPhoto from "@/assets/hero-paulo-reis.png";
-import constelacaoBg from "@/assets/constelacao-bg.jpg";
+import heroPhoto from "@/assets/hero-paulo-reis.webp";
+import constelacaoBg from "@/assets/constelacao-bg.webp";
 import { StarField } from "./StarField";
 import { useSiteSettings } from "@/hooks/use-site-data";
 
