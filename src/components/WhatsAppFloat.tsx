@@ -1,4 +1,4 @@
-import whatsappIcon from "@/assets/logo-whatsapp.png";
+import { FaWhatsapp } from "react-icons/fa";
 import { useSiteSettings } from "@/hooks/use-site-data";
 
 const FALLBACK_URL =
@@ -14,14 +14,9 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar com Paulo Reis no WhatsApp"
-      className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full animate-whatsapp-glow transition-transform duration-300 hover:scale-110 sm:bottom-8 sm:right-8 sm:h-[68px] sm:w-[68px]"
+      className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg animate-whatsapp-glow transition-transform duration-300 hover:scale-110 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
     >
-      <img
-        src={whatsappIcon}
-        alt=""
-        className="h-12 w-12 object-contain sm:h-14 sm:w-14"
-        loading="eager"
-      />
+      <FaWhatsapp className="h-8 w-8 sm:h-9 sm:w-9" aria-hidden="true" />
     </a>
   );
 }
