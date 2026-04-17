@@ -118,7 +118,7 @@ export function Hero() {
         {/* Right: photo with parallax — pushed down to hide bottom crop behind the fade */}
         <div
           ref={photoRef}
-          className="relative flex-1 self-end -mb-8 lg:-mb-12"
+          className="relative flex-1 self-end -mb-3 lg:-mb-5"
           style={{ willChange: "transform" }}
         >
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
