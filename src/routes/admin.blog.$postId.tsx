@@ -41,6 +41,7 @@ function BlogPostEdit() {
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [dirty, setDirty] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -59,8 +60,20 @@ function BlogPostEdit() {
       }
       setCats((cRes.data ?? []) as { id: string; name: string }[]);
       setLoading(false);
+      setDirty(false);
     })();
   }, [postId]);
+
+  // Aviso ao sair sem guardar
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (!dirty) return;
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
 
   if (loading)
     return (
