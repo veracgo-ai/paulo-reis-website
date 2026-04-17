@@ -43,8 +43,9 @@ function BlogIndex() {
   const { sections } = usePageSections("blog");
   const hero = sectionBySlug(sections, "hero");
 
-  const featured = !cat ? posts.find((p) => p.is_featured) : undefined;
-  const rest = featured ? posts.filter((p) => p.id !== featured.id) : posts;
+  const featuredList = !cat ? posts.filter((p) => p.is_featured).slice(0, 2) : [];
+  const featuredIds = new Set(featuredList.map((p) => p.id));
+  const rest = posts.filter((p) => !featuredIds.has(p.id));
 
   return (
     <div className="relative min-h-screen bg-[var(--navy-deep)] pb-24 text-white">
@@ -55,6 +56,53 @@ function BlogIndex() {
         imageUrl={hero?.image_url}
       />
       <div className="mx-auto max-w-6xl px-4 pt-12 sm:px-6 lg:px-8">
+
+        {loading && <p className="text-center text-white/60">A carregar artigos…</p>}
+
+        {/* Featured (acima dos filtros) */}
+        {featuredList.length > 0 && (
+          <div className="mb-16 space-y-10">
+            {featuredList.map((f, idx) => (
+              <Link
+                key={f.id}
+                to="/blog/$slug"
+                params={{ slug: f.slug }}
+                className="group grid gap-6 overflow-hidden rounded-lg border border-[var(--gold)]/30 bg-white/5 transition-all hover:border-[var(--gold)] hover:shadow-[var(--shadow-gold)] md:grid-cols-2"
+              >
+                <div
+                  className={`relative aspect-[4/3] w-full overflow-hidden bg-white/5 md:aspect-auto md:min-h-[320px] ${
+                    idx % 2 === 1 ? "md:order-2" : ""
+                  }`}
+                >
+                  {f.cover_image_url ? (
+                    <img
+                      src={f.cover_image_url}
+                      alt={f.title}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)]/20 to-transparent" />
+                  )}
+                </div>
+                <div className="flex flex-col justify-center p-8">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
+                    Em destaque
+                  </span>
+                  <h2 className="mt-3 font-display text-3xl text-white transition-colors group-hover:text-[var(--gold)] sm:text-4xl">
+                    {f.title}
+                  </h2>
+                  {f.excerpt && (
+                    <p className="mt-4 text-white/75">{f.excerpt}</p>
+                  )}
+                  <p className="mt-6 text-xs uppercase tracking-wider text-white/50">
+                    {formatDate(f.published_at)} · Ler artigo →
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Categorias */}
         <nav
@@ -88,32 +136,8 @@ function BlogIndex() {
           ))}
         </nav>
 
-        {loading && <p className="text-center text-white/60">A carregar artigos…</p>}
-
         {!loading && posts.length === 0 && (
           <p className="text-center text-white/60">Sem artigos nesta categoria.</p>
-        )}
-
-        {/* Featured */}
-        {featured && (
-          <Link
-            to="/blog/$slug"
-            params={{ slug: featured.slug }}
-            className="group mb-12 block rounded-lg border border-[var(--gold)]/30 bg-white/5 p-8 transition-all hover:border-[var(--gold)] hover:shadow-[var(--shadow-gold)]"
-          >
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
-              Em destaque
-            </span>
-            <h2 className="mt-3 font-display text-3xl text-white transition-colors group-hover:text-[var(--gold)] sm:text-4xl">
-              {featured.title}
-            </h2>
-            {featured.excerpt && (
-              <p className="mt-4 text-white/75 sm:text-lg">{featured.excerpt}</p>
-            )}
-            <p className="mt-6 text-xs uppercase tracking-wider text-white/50">
-              {formatDate(featured.published_at)} · Ler artigo →
-            </p>
-          </Link>
         )}
 
         {/* Grid */}
@@ -123,17 +147,31 @@ function BlogIndex() {
               key={p.id}
               to="/blog/$slug"
               params={{ slug: p.slug }}
-              className="group flex h-full flex-col rounded-lg border border-white/10 bg-white/[0.03] p-6 transition-all hover:-translate-y-1 hover:border-[var(--gold)]/40 hover:bg-white/5"
+              className="group flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-white/[0.03] transition-all hover:-translate-y-1 hover:border-[var(--gold)]/40 hover:bg-white/5"
             >
-              <h3 className="font-display text-xl text-white transition-colors group-hover:text-[var(--gold)]">
-                {p.title}
-              </h3>
-              {p.excerpt && (
-                <p className="mt-3 line-clamp-3 flex-1 text-sm text-white/70">{p.excerpt}</p>
-              )}
-              <p className="mt-4 text-xs uppercase tracking-wider text-white/50">
-                {formatDate(p.published_at)}
-              </p>
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-white/5">
+                {p.cover_image_url ? (
+                  <img
+                    src={p.cover_image_url}
+                    alt={p.title}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)]/15 to-transparent" />
+                )}
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <h3 className="font-display text-xl text-white transition-colors group-hover:text-[var(--gold)]">
+                  {p.title}
+                </h3>
+                {p.excerpt && (
+                  <p className="mt-3 line-clamp-3 flex-1 text-sm text-white/70">{p.excerpt}</p>
+                )}
+                <p className="mt-4 text-xs uppercase tracking-wider text-white/50">
+                  {formatDate(p.published_at)}
+                </p>
+              </div>
             </Link>
           ))}
         </div>
