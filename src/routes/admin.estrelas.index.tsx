@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Loader2, Edit, Star as StarIcon } from "lucide-react";
 
-export const Route = createFileRoute("/admin/estrelas")({
+export const Route = createFileRoute("/admin/estrelas/")({
   component: StarsList,
 });
 
