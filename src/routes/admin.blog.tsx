@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/admin/PageHeader";
@@ -30,6 +30,7 @@ function slugify(s: string) {
 }
 
 function BlogPostsAdmin() {
+  const router = useRouter();
   const [posts, setPosts] = useState<Post[]>([]);
   const [cats, setCats] = useState<Cat[]>([]);
   const [loading, setLoading] = useState(true);
@@ -60,7 +61,7 @@ function BlogPostsAdmin() {
       .select()
       .single();
     if (error) return toast.error(error.message);
-    window.location.href = `/admin/blog/${data.id}`;
+    router.navigate({ to: "/admin/blog/$postId", params: { postId: data.id } });
   };
 
   const remove = async (id: string) => {
