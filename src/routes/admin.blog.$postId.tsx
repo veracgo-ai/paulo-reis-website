@@ -258,6 +258,27 @@ function BlogPostEdit() {
           />
         </div>
       </div>
+
+      {/* Barra sticky inferior — sempre visível */}
+      <div className="sticky bottom-0 -mx-6 mt-6 border-t border-slate-200 bg-white/95 px-6 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] backdrop-blur md:-mx-8 md:px-8">
+        <div className="flex items-center justify-between gap-4">
+          <div className="text-sm text-slate-500">
+            {dirty ? (
+              <span className="font-medium text-amber-600">● Tens alterações por guardar</span>
+            ) : (
+              <span className="text-emerald-600">✓ Tudo guardado</span>
+            )}
+          </div>
+          <button
+            onClick={() => save()}
+            disabled={saving || !dirty}
+            className="inline-flex items-center gap-2 rounded-md bg-[#C5A065] px-6 py-2.5 text-sm font-semibold text-[#0A192F] shadow-sm transition-colors hover:bg-[#C5A065]/90 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+            {saving ? "A guardar..." : "Guardar alterações"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
