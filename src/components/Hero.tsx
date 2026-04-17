@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import heroPhoto from "@/assets/hero-paulo-reis.png";
 import constelacaoBg from "@/assets/constelacao-bg.jpg";
@@ -13,13 +13,26 @@ const TAGLINES = [
 
 export function Hero() {
   const { settings } = useSiteSettings();
-  const [scrollY, setScrollY] = useState(0);
   const [tagIndex, setTagIndex] = useState(0);
   const [typed, setTyped] = useState("");
+  const bgRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
 
-  // Parallax
+  // Parallax via rAF + direct transform — no re-renders
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      if (bgRef.current) bgRef.current.style.transform = `translate3d(0,${y * 0.25}px,0)`;
+      if (photoRef.current) photoRef.current.style.transform = `translate3d(0,${y * -0.08}px,0)`;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -46,12 +59,12 @@ export function Hero() {
     <section className="relative isolate min-h-screen overflow-hidden bg-[var(--navy-deep)]">
       {/* Constellation background with parallax */}
       <div
+        ref={bgRef}
         className="absolute inset-0 -z-10"
         style={{
           backgroundImage: `url(${constelacaoBg})`,
           backgroundSize: "cover",
-          backgroundPosition: `center ${50 + scrollY * 0.12}%`,
-          transform: `translateY(${scrollY * 0.25}px)`,
+          backgroundPosition: "center",
           willChange: "transform",
         }}
       />
@@ -59,8 +72,8 @@ export function Hero() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[var(--navy-deep)]/85 via-[var(--navy)]/70 to-[var(--navy-deep)]" />
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,25,47,0.8)_85%)]" />
 
-      {/* Animated stars */}
-      <StarField count={80} />
+      {/* Animated stars (reduced count for perf) */}
+      <StarField count={40} />
 
       <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col-reverse items-center gap-8 px-4 pb-12 pt-32 sm:px-6 lg:flex-row lg:gap-12 lg:px-8 lg:pt-40">
         {/* Left: text */}
@@ -103,10 +116,7 @@ export function Hero() {
         </div>
 
         {/* Right: photo with parallax */}
-        <div
-          className="relative flex-1"
-          style={{ transform: `translateY(${scrollY * -0.08}px)`, willChange: "transform" }}
-        >
+        <div ref={photoRef} className="relative flex-1" style={{ willChange: "transform" }}>
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
             {/* Glow ring */}
             <div className="absolute inset-0 -z-10 mx-auto h-full w-full rounded-full bg-[var(--gold)]/15 blur-3xl" />
@@ -115,6 +125,7 @@ export function Hero() {
               alt="Paulo Reis, consultor imobiliário"
               className="relative mx-auto h-auto w-full max-h-[640px] object-contain animate-float drop-shadow-2xl"
               loading="eager"
+              fetchPriority="high"
             />
           </div>
         </div>
