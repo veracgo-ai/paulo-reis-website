@@ -14,7 +14,7 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar com Paulo Reis no WhatsApp"
-      className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-white animate-whatsapp-glow transition-transform duration-300 hover:scale-110 sm:bottom-8 sm:right-8 sm:h-[68px] sm:w-[68px]"
+      className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full animate-whatsapp-glow transition-transform duration-300 hover:scale-110 sm:bottom-8 sm:right-8 sm:h-[68px] sm:w-[68px]"
     >
       <img
         src={whatsappIcon}
