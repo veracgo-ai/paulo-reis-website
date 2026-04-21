@@ -6,4 +6,12 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+// Disable the Cloudflare Workers adapter so the build produces a standard
+// Node-compatible output suitable for hosts like Railway, Render, Fly, etc.
+// The Lovable preview/published environment does not require this flag.
+export default defineConfig({
+  cloudflare: false,
+  tanstackStart: {
+    target: "node-server",
+  },
+});
