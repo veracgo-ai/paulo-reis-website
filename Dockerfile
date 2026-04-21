@@ -28,10 +28,14 @@ ENV NODE_ENV=production
 
 # Copy only what we need at runtime.
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json* ./
 COPY --from=builder /app/server-node.mjs ./server-node.mjs
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
+
+# Reinstall production dependencies cleanly with npm in the Node runtime image.
+# This avoids any Bun-specific node_modules layout issues.
+RUN npm install --omit=dev --no-audit --no-fund || npm install --omit=dev --no-audit --no-fund --legacy-peer-deps
 
 EXPOSE 3000
 ENV PORT=3000
-CMD ["node", "server-node.mjs"]
+CMD ["node", "--enable-source-maps", "server-node.mjs"]
