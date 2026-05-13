@@ -49,13 +49,40 @@ function ContactosPage() {
   const rawMap =
     settings["contact_map_url"] ??
     settings["contact_map_embed"] ??
-    "https://www.google.com/maps?q=Albufeira,Algarve,Portugal&output=embed";
-  // Aceita: URL direto, link de partilha, ou HTML completo de <iframe ... src="...">
-  const extractSrc = (val: string) => {
-    const match = val.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
-    return match ? match[1] : val.trim();
+    "";
+  // Aceita qualquer um destes formatos colados pelo admin:
+  //  - HTML completo do <iframe ... src="..."> (Google Maps → Partilhar → Incorporar)
+  //  - URL de embed direta (https://www.google.com/maps/embed?...)
+  //  - URL normal/partilha do Google Maps (https://www.google.com/maps/place/.../@lat,lng,...)
+  //  - URL curta (https://maps.app.goo.gl/...)
+  //  - Apenas uma morada em texto
+  const toEmbedSrc = (val: string): string => {
+    const v = (val ?? "").trim();
+    if (!v) {
+      const q = encodeURIComponent(address || "Algarve, Portugal");
+      return `https://www.google.com/maps?q=${q}&output=embed`;
+    }
+    // 1) HTML de iframe → extrair src
+    const iframeMatch = v.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
+    if (iframeMatch) return iframeMatch[1];
+    // 2) Já é uma URL embed válida
+    if (/google\.[^/]+\/maps\/embed/i.test(v)) return v;
+    if (/[?&]output=embed/i.test(v)) return v;
+    // 3) URL do Google Maps com coordenadas @lat,lng
+    const coord = v.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (coord) {
+      return `https://www.google.com/maps?q=${coord[1]},${coord[2]}&z=17&output=embed`;
+    }
+    // 4) URL com /place/<nome>
+    const place = v.match(/\/place\/([^/@?]+)/i);
+    if (place) {
+      const name = decodeURIComponent(place[1]).replace(/\+/g, " ");
+      return `https://www.google.com/maps?q=${encodeURIComponent(name)}&output=embed`;
+    }
+    // 5) Qualquer outra URL ou texto livre → tratar como query
+    return `https://www.google.com/maps?q=${encodeURIComponent(v)}&output=embed`;
   };
-  const mapEmbed = extractSrc(rawMap);
+  const mapEmbed = toEmbedSrc(rawMap);
 
   const {
     register,
