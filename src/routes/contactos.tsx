@@ -45,11 +45,12 @@ function ContactosPage() {
 
   const phone = settings["contact_phone"] ?? "+351 912 345 678";
   const email = settings["contact_email"] ?? "geral@pauloreis.pt";
-  const address = settings["contact_address"] ?? "Algarve, Portugal";
+  const address =
+    settings["contact_address"] ?? "Rua Serpa Pinto 69, 8500-706 Portimão";
   const rawMap =
     settings["contact_map_url"] ??
     settings["contact_map_embed"] ??
-    "";
+    "Rua Serpa Pinto 69, 8500-706 Portimão, Portugal";
   // Aceita qualquer um destes formatos colados pelo admin:
   //  - HTML completo do <iframe ... src="..."> (Google Maps → Partilhar → Incorporar)
   //  - URL de embed direta (https://www.google.com/maps/embed?...)
@@ -59,7 +60,9 @@ function ContactosPage() {
   const toEmbedSrc = (val: string): string => {
     const v = (val ?? "").trim();
     if (!v) {
-      const q = encodeURIComponent(address || "Algarve, Portugal");
+      const q = encodeURIComponent(
+        address || "Rua Serpa Pinto 69, 8500-706 Portimão, Portugal",
+      );
       return `https://www.google.com/maps?q=${q}&output=embed`;
     }
     // 1) HTML de iframe → extrair src
