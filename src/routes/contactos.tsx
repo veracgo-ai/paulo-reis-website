@@ -46,9 +46,16 @@ function ContactosPage() {
   const phone = settings["contact_phone"] ?? "+351 912 345 678";
   const email = settings["contact_email"] ?? "geral@pauloreis.pt";
   const address = settings["contact_address"] ?? "Algarve, Portugal";
-  const mapEmbed =
+  const rawMap =
+    settings["contact_map_url"] ??
     settings["contact_map_embed"] ??
     "https://www.google.com/maps?q=Albufeira,Algarve,Portugal&output=embed";
+  // Aceita: URL direto, link de partilha, ou HTML completo de <iframe ... src="...">
+  const extractSrc = (val: string) => {
+    const match = val.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
+    return match ? match[1] : val.trim();
+  };
+  const mapEmbed = extractSrc(rawMap);
 
   const {
     register,
