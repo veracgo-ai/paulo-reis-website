@@ -13,6 +13,7 @@ import { Route as TermosUsoRouteImport } from './routes/termos-uso'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as PoliticaPrivacidadeRouteImport } from './routes/politica-privacidade'
 import { Route as LigacoesExternasRouteImport } from './routes/ligacoes-externas'
+import { Route as LandingRouteImport } from './routes/landing'
 import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as ConstelacaoOrionRouteImport } from './routes/constelacao-orion'
@@ -57,6 +58,11 @@ const PoliticaPrivacidadeRoute = PoliticaPrivacidadeRouteImport.update({
 const LigacoesExternasRoute = LigacoesExternasRouteImport.update({
   id: '/ligacoes-externas',
   path: '/ligacoes-externas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandingRoute = LandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqsRoute = FaqsRouteImport.update({
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/constelacao-orion': typeof ConstelacaoOrionRouteWithChildren
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
+  '/landing': typeof LandingRoute
   '/ligacoes-externas': typeof LigacoesExternasRoute
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
+  '/landing': typeof LandingRoute
   '/ligacoes-externas': typeof LigacoesExternasRoute
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
@@ -250,6 +258,7 @@ export interface FileRoutesById {
   '/constelacao-orion': typeof ConstelacaoOrionRouteWithChildren
   '/contactos': typeof ContactosRoute
   '/faqs': typeof FaqsRoute
+  '/landing': typeof LandingRoute
   '/ligacoes-externas': typeof LigacoesExternasRoute
   '/politica-privacidade': typeof PoliticaPrivacidadeRoute
   '/sobre': typeof SobreRoute
@@ -283,6 +292,7 @@ export interface FileRouteTypes {
     | '/constelacao-orion'
     | '/contactos'
     | '/faqs'
+    | '/landing'
     | '/ligacoes-externas'
     | '/politica-privacidade'
     | '/sobre'
@@ -312,6 +322,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contactos'
     | '/faqs'
+    | '/landing'
     | '/ligacoes-externas'
     | '/politica-privacidade'
     | '/sobre'
@@ -341,6 +352,7 @@ export interface FileRouteTypes {
     | '/constelacao-orion'
     | '/contactos'
     | '/faqs'
+    | '/landing'
     | '/ligacoes-externas'
     | '/politica-privacidade'
     | '/sobre'
@@ -373,6 +385,7 @@ export interface RootRouteChildren {
   ConstelacaoOrionRoute: typeof ConstelacaoOrionRouteWithChildren
   ContactosRoute: typeof ContactosRoute
   FaqsRoute: typeof FaqsRoute
+  LandingRoute: typeof LandingRoute
   LigacoesExternasRoute: typeof LigacoesExternasRoute
   PoliticaPrivacidadeRoute: typeof PoliticaPrivacidadeRoute
   SobreRoute: typeof SobreRoute
@@ -409,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: '/ligacoes-externas'
       fullPath: '/ligacoes-externas'
       preLoaderRoute: typeof LigacoesExternasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/landing': {
+      id: '/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof LandingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faqs': {
@@ -668,6 +688,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConstelacaoOrionRoute: ConstelacaoOrionRouteWithChildren,
   ContactosRoute: ContactosRoute,
   FaqsRoute: FaqsRoute,
+  LandingRoute: LandingRoute,
   LigacoesExternasRoute: LigacoesExternasRoute,
   PoliticaPrivacidadeRoute: PoliticaPrivacidadeRoute,
   SobreRoute: SobreRoute,
