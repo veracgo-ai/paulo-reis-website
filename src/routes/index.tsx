@@ -4,6 +4,7 @@ import { ApresentacaoSection } from "@/components/ApresentacaoSection";
 import { StarsGrid } from "@/components/StarsGrid";
 import { usePageSections, useStars, sectionBySlug, useSiteSettings } from "@/hooks/use-site-data";
 import { useReveal } from "@/hooks/use-reveal";
+import { Star } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -71,7 +72,73 @@ function Index() {
       {processo && <MetodoSection section={processo} />}
 
       {ctaFinal && <CtaFinalSection section={ctaFinal} agendaUrl={agendaUrl} />}
+
+      <DepoimentosSection />
     </>
+  );
+}
+
+const DEPOIMENTOS = [
+  {
+    nome: "Theo",
+    texto:
+      "Recomendo 100%. Exímio representante no processo todo. A voltar a comprar é com este senhor. Recomendo.",
+  },
+  {
+    nome: "Miguel Vieira",
+    texto:
+      "Excelente. O Paulo foi um mediador de excelência. Tudo correu na perfeição, com calma, dentro dos tempos e com extremo rigor para ambas as partes. Recomendo!",
+  },
+  {
+    nome: "Caio",
+    texto:
+      "Muito boa qualidade de serviço. O Paulo Reis foi impecável durante todo o processo. Sempre disponível, direto nas respostas e sem complicações. Tratou de tudo com rapidez e deu-me total confiança em cada decisão. Nota-se que conhece bem o mercado e sabe o que está a fazer. Facilitou bastante um processo que podia ser chato e burocrático. Recomendo sem qualquer dúvida.",
+  },
+  {
+    nome: "Ester Xavier",
+    texto:
+      "Magnífico. O Paulo é um profissional magnífico porque, para além de extremamente competente no que faz, é muito pragmático com as análises que faz e, com isso, acaba por transmitir imensa confiança ao cliente. Obrigada Paulo pelos excelentes negócios que fizeste. Muitos parabéns por seres essa maravilhosa pessoa.",
+  },
+];
+
+function DepoimentosSection() {
+  const ref = useReveal();
+  return (
+    <section
+      ref={ref}
+      className="reveal relative overflow-hidden bg-[var(--neutral-light,#f7f5f0)] px-4 py-24 sm:py-32"
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="text-center">
+          <span className="inline-block text-xs font-semibold uppercase tracking-[0.3em] text-[var(--gold)]">
+            Depoimentos
+          </span>
+          <h2 className="mt-3 font-display text-4xl text-[var(--navy)] sm:text-5xl">
+            O que dizem os clientes
+          </h2>
+        </div>
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
+          {DEPOIMENTOS.map((d) => (
+            <figure
+              key={d.nome}
+              className="group relative flex h-full flex-col rounded-lg border border-[var(--navy)]/10 bg-white p-8 shadow-[0_10px_40px_-20px_rgba(10,25,47,0.2)] transition-all hover:-translate-y-1 hover:border-[var(--gold)]/40 hover:shadow-[0_20px_50px_-20px_rgba(10,25,47,0.3)]"
+            >
+              <div className="flex items-center gap-1 text-[var(--gold)]">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <blockquote className="mt-5 flex-1 text-base leading-relaxed text-[var(--neutral-dark)]">
+                “{d.texto}”
+              </blockquote>
+              <figcaption className="mt-6 border-t border-[var(--navy)]/10 pt-4 font-display text-lg text-[var(--navy)]">
+                {d.nome}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
