@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useServerFn } from "@tanstack/react-start";
-import { submitContact } from "@/server/contact.functions";
+import { submitContact } from "@/lib/contact.functions";
 import { contactSchema, type ContactInput } from "@/lib/contact-schema";
 import { useSiteSettings, usePageSections, sectionBySlug } from "@/hooks/use-site-data";
 import { useReveal } from "@/hooks/use-reveal";
