@@ -1,9 +1,8 @@
 # syntax=docker/dockerfile:1.7
 
 # ---------- Dependencies stage ----------
-# Vite 7 requires Node 20.19+ or 22.12+. The old Bun 1.1 image bundled
-# Node 22.6, which makes Railway builds fail or hang while building the image.
-FROM node:22.12-slim AS deps
+# Vite 7 and current tooling require Node 22.13+.
+FROM node:22.13-slim AS deps
 WORKDIR /app
 ENV npm_config_audit=false npm_config_fund=false
 
@@ -12,7 +11,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 # ---------- Build stage ----------
-FROM node:22.12-slim AS builder
+FROM node:22.13-slim AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -35,7 +34,7 @@ RUN npm run build
 RUN npm prune --omit=dev --no-audit --no-fund
 
 # ---------- Runtime stage ----------
-FROM node:22.12-slim AS runner
+FROM node:22.13-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV SUPABASE_URL=https://qlxdidtestxifqcovezs.supabase.co
