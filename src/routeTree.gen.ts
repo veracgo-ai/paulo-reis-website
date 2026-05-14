@@ -28,6 +28,7 @@ import { Route as AdminSobreRouteImport } from './routes/admin.sobre'
 import { Route as AdminRedesSociaisRouteImport } from './routes/admin.redes-sociais'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminLigacoesExternasRouteImport } from './routes/admin.ligacoes-externas'
+import { Route as AdminLandingRouteImport } from './routes/admin.landing'
 import { Route as AdminInicioRouteImport } from './routes/admin.inicio'
 import { Route as AdminFaqsRouteImport } from './routes/admin.faqs'
 import { Route as AdminEstrelasRouteImport } from './routes/admin.estrelas'
@@ -135,6 +136,11 @@ const AdminLigacoesExternasRoute = AdminLigacoesExternasRouteImport.update({
   path: '/ligacoes-externas',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLandingRoute = AdminLandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminInicioRoute = AdminInicioRouteImport.update({
   id: '/inicio',
   path: '/inicio',
@@ -209,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/admin/estrelas': typeof AdminEstrelasRouteWithChildren
   '/admin/faqs': typeof AdminFaqsRoute
   '/admin/inicio': typeof AdminInicioRoute
+  '/admin/landing': typeof AdminLandingRoute
   '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redes-sociais': typeof AdminRedesSociaisRoute
@@ -237,6 +244,7 @@ export interface FileRoutesByTo {
   '/admin/contactos': typeof AdminContactosRoute
   '/admin/faqs': typeof AdminFaqsRoute
   '/admin/inicio': typeof AdminInicioRoute
+  '/admin/landing': typeof AdminLandingRoute
   '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redes-sociais': typeof AdminRedesSociaisRoute
@@ -270,6 +278,7 @@ export interface FileRoutesById {
   '/admin/estrelas': typeof AdminEstrelasRouteWithChildren
   '/admin/faqs': typeof AdminFaqsRoute
   '/admin/inicio': typeof AdminInicioRoute
+  '/admin/landing': typeof AdminLandingRoute
   '/admin/ligacoes-externas': typeof AdminLigacoesExternasRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redes-sociais': typeof AdminRedesSociaisRoute
@@ -304,6 +313,7 @@ export interface FileRouteTypes {
     | '/admin/estrelas'
     | '/admin/faqs'
     | '/admin/inicio'
+    | '/admin/landing'
     | '/admin/ligacoes-externas'
     | '/admin/login'
     | '/admin/redes-sociais'
@@ -332,6 +342,7 @@ export interface FileRouteTypes {
     | '/admin/contactos'
     | '/admin/faqs'
     | '/admin/inicio'
+    | '/admin/landing'
     | '/admin/ligacoes-externas'
     | '/admin/login'
     | '/admin/redes-sociais'
@@ -364,6 +375,7 @@ export interface FileRouteTypes {
     | '/admin/estrelas'
     | '/admin/faqs'
     | '/admin/inicio'
+    | '/admin/landing'
     | '/admin/ligacoes-externas'
     | '/admin/login'
     | '/admin/redes-sociais'
@@ -529,6 +541,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLigacoesExternasRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/landing': {
+      id: '/admin/landing'
+      path: '/landing'
+      fullPath: '/admin/landing'
+      preLoaderRoute: typeof AdminLandingRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/inicio': {
       id: '/admin/inicio'
       path: '/inicio'
@@ -645,6 +664,7 @@ interface AdminRouteChildren {
   AdminEstrelasRoute: typeof AdminEstrelasRouteWithChildren
   AdminFaqsRoute: typeof AdminFaqsRoute
   AdminInicioRoute: typeof AdminInicioRoute
+  AdminLandingRoute: typeof AdminLandingRoute
   AdminLigacoesExternasRoute: typeof AdminLigacoesExternasRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminRedesSociaisRoute: typeof AdminRedesSociaisRoute
@@ -660,6 +680,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEstrelasRoute: AdminEstrelasRouteWithChildren,
   AdminFaqsRoute: AdminFaqsRoute,
   AdminInicioRoute: AdminInicioRoute,
+  AdminLandingRoute: AdminLandingRoute,
   AdminLigacoesExternasRoute: AdminLigacoesExternasRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminRedesSociaisRoute: AdminRedesSociaisRoute,
