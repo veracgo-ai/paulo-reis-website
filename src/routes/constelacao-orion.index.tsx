@@ -32,7 +32,7 @@ function ConstelacaoIndex() {
         }
         imageUrl={hero?.image_url}
       />
-      <StarsGrid stars={stars} title="As dez estrelas" subtitle="Cada uma com a sua função" />
+      <StarsGrid stars={stars} title="As doze estrelas" subtitle="Cada uma com a sua função" />
     </>
   );
 }
