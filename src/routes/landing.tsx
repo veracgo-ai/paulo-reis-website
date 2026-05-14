@@ -33,7 +33,7 @@ export const Route = createFileRoute("/landing")({
 });
 
 function LandingPage() {
-  const { sections } = usePageSections("contactos");
+  const { sections } = usePageSections("landing");
   const hero = sectionBySlug(sections, "hero");
   const heroRef = useReveal();
   const formRef = useReveal();

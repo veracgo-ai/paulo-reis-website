@@ -32,6 +32,7 @@ const NAV = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/inicio", label: "Início (página)", icon: LayoutDashboard },
   { to: "/admin/sobre", label: "Sobre Mim", icon: User },
+  { to: "/admin/landing", label: "Landing", icon: LayoutDashboard },
   { to: "/admin/estrelas", label: "Constelação Orion", icon: Star },
   { to: "/admin/blog", label: "Blog (posts)", icon: FileText },
   { to: "/admin/blog-categorias", label: "Blog (categorias)", icon: FileText },
