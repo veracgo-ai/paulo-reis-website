@@ -148,7 +148,22 @@ function MetodoSection({
   section: { title: string | null; subtitle: string | null; content: string | null; image_url: string | null };
 }) {
   const ref = useReveal();
-  const blocks = (section.content ?? "").split(/\n\n+/).filter(Boolean);
+  // Normaliza conteúdo: aceita texto simples (markdown com **) ou HTML vindo do editor.
+  const raw = section.content ?? "";
+  const plain = raw
+    .replace(/<\s*br\s*\/?>/gi, "\n")
+    .replace(/<\/\s*(p|div|li|h[1-6])\s*>/gi, "\n\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\r/g, "")
+    .trim();
+
+  // Divide pelos marcadores **N. titulo** independentemente das quebras de linha.
+  const parts = plain.split(/(?=\*\*\s*\d+\.\s)/).map((s) => s.trim()).filter(Boolean);
+  const blocks = parts.length > 1 ? parts : plain.split(/\n\n+/).filter(Boolean);
   return (
     <section
       ref={ref}
@@ -176,9 +191,9 @@ function MetodoSection({
         )}
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {blocks.map((b, i) => {
-            const m = b.match(/^\*\*([^*]+)\*\*\n?(.*)$/s);
-            const heading = m?.[1] ?? `Passo ${i + 1}`;
-            const body = m?.[2]?.trim() ?? b;
+            const m = b.match(/^\*\*\s*(?:\d+\.\s*)?([^*]+?)\s*\*\*\s*([\s\S]*)$/);
+            const heading = (m?.[1] ?? `Passo ${i + 1}`).replace(/\.$/, "").trim();
+            const body = (m?.[2] ?? b).replace(/\*\*/g, "").trim();
             return (
               <div
                 key={i}
