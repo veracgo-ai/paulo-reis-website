@@ -1,0 +1,3 @@
+UPDATE public.page_sections
+SET content = E'**1. Escutar para entender**\nAntes de propor, observo. Antes de agir, compreendo o teu contexto, objetivos e limites.\n\n**2. Estruturar a decisão.**\nMonto o cenário completo: variáveis, riscos, alavancas. Sem opiniões soltas — apenas direção fundamentada.\n\n**3. Executar com clareza.**\nNegociação, acompanhamento documental, fecho. Tu sabes sempre onde está o processo e o que vem a seguir.'
+WHERE id = '38874487-4adc-4de9-a50c-5b4ba16c3fd2';
