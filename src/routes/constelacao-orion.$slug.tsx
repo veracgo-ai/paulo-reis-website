@@ -3,12 +3,6 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Star } from "@/hooks/use-site-data";
 import { useStarSections } from "@/hooks/use-star-sections";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Briefcase, Home, KeyRound, Building2, Sparkles, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/constelacao-orion/$slug")({
@@ -179,26 +173,21 @@ function StarPage() {
                 Indique. Participe. Receba.
               </h2>
             </div>
-            <Accordion
-              type="single"
-              collapsible
-              className="overflow-hidden rounded-md border border-[var(--gold)]/20 bg-white/5 backdrop-blur"
-            >
+            <div className="overflow-hidden rounded-md border border-[var(--gold)]/20 bg-white/5 backdrop-blur">
               {embaixador.map((s) => (
-                <AccordionItem
+                <div
                   key={s.id}
-                  value={s.id}
-                  className="border-b border-[var(--gold)]/15 px-6 last:border-0"
+                  className="border-b border-[var(--gold)]/15 px-6 py-5 last:border-0"
                 >
-                  <AccordionTrigger className="py-5 text-left font-display text-lg text-[var(--gold)] hover:no-underline">
-                    {s.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-5 text-base leading-relaxed text-white/80">
-                    {s.content}
-                  </AccordionContent>
-                </AccordionItem>
+                  <h3 className="font-display text-lg text-[var(--gold)]">{s.title}</h3>
+                  {s.content && (
+                    <p className="mt-3 text-base leading-relaxed text-white/80 whitespace-pre-line">
+                      {s.content}
+                    </p>
+                  )}
+                </div>
               ))}
-            </Accordion>
+            </div>
           </div>
         </section>
       )}
